@@ -1,3 +1,5 @@
+created this project to connect a backend using mysql to a front end using react, this is a simple fullstack application
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
