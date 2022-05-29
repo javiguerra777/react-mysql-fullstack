@@ -16,7 +16,7 @@ const Signup = () => {
       const user = {
         name: name,
         email: email,
-        password
+        password: password
       }
       await createNewUser(user);
       console.log('created user');
@@ -26,10 +26,10 @@ const Signup = () => {
     navigate('/');
   }
   return (
-    <div>
-      <Link to="/">Cancel</Link>
-      <form onSubmit={createUser}>
-        <label htmlFor="name">
+    <div className='container'>
+      <Link className='btn' to="/">Cancel</Link>
+      <form className='form-group' onSubmit={createUser}>
+        <label className='form-control' htmlFor="name">
           Name:
           <input 
           type="text"
@@ -39,7 +39,7 @@ const Signup = () => {
           onChange={(e)=> setName(e.target.value)}
            />
         </label>
-        <label htmlFor="email">
+        <label className='form-control' htmlFor="email">
           Email:
           <input 
           type="email"
@@ -49,7 +49,7 @@ const Signup = () => {
           onChange={(e)=> setEmail(e.target.value)}
           />
         </label>
-        <label htmlFor="password">
+        <label className='form-control' htmlFor="password">
           Password:
           <input 
           type="password"
@@ -59,7 +59,7 @@ const Signup = () => {
           onChange={(e)=> setPassword(e.target.value)}
            />
         </label>
-        <button disabled={disabled}>Create Profile</button>
+        <button className='btn-primary' disabled={disabled}>Create Profile</button>
       </form>
     </div>
   )

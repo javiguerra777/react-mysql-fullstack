@@ -1,35 +1,32 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
-import { getAuthProducts } from '../utils/api';
+import { Link } from 'react-router-dom';
+import Header from '../components/Header';
+import { getAuthProducts, deleteProduct } from '../utils/api';
 
 const Home = () => {
-  const [items, setItems] = useState([]);
-  const navigate = useNavigate();
-  const logout = ()=> {
-    localStorage.removeItem('JWT');
-    navigate('/');
-  }
-  useEffect(()=> {
+  const [items, setItems] = useState([]);  
+  useEffect(() => {
     getAuthProducts(localStorage.getItem('JWT'))
-    .then(res=> setItems(res.data));
-  },[])
+      .then(res => setItems(res.data));
+  }, []);
+  const deleteItem = (id) => {
+    deleteProduct(id, localStorage.getItem('JWT'));
+    const newItems = items && items.filter((item) => item.id !== id);
+    setItems(newItems);
+  }
+  console.log(items)
   return (
     <>
-    <div>
-      <button onClick={logout}>Logout</button>
-    </div>
-    <div>
-    <Link to="../addproducts">Add products</Link>
-    <div>
+      <Header/>
+    <div className='container flex-body'>
       {items.map(item=> {
         return(
-          <div className='card' key={item.id}>
-            <h5>{item.product_name}</h5>
+          <div className='card card-home' key={item.id}>
+            <h5 id="fixed">{item.product_name} <Link to={ `../editproduct/${item.id}`}>Edit Product</Link><button className=' btn btn-secondary' onClick={()=> deleteItem(item.id)}>X</button></h5>
             <p>{item.product_description}</p>
           </div>
         )
       })}
-    </div>
     </div>
     </>
   )

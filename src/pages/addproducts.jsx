@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getProducts, addUserProducts } from '../utils/api';
-import { Link } from 'react-router-dom';
+import Header from '../components/Header';
 
 const Addproducts = () => {
   const [items,setItems] = useState([]);
@@ -15,15 +15,18 @@ const Addproducts = () => {
   }
   return (
     <>
-    <Link to="../home">Return Home</Link>
-    <div>List of products</div>
-    <div>
+      <Header/>
+      <header className='header'>
+        <h1>List of Products:</h1></header>
+      <div className='container flex'>
       {items.map(item=> {
         return(
-          <div key={item.id} className="card">
+          <div key={item.id} className="card card-product">
             <h5>{item.product_name}</h5>
             <p>{item.product_description}</p>
-            <button onClick={()=>addItem(item.id)}>Add to cart</button>
+            <div className='new-btn'>
+              <button className='btn btn-light' onClick={() => addItem(item.id)}>Add to cart</button>
+            </div>
           </div>
         )
       })}
