@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { getProducts, addUserProducts } from '../utils/api';
 import Header from '../components/Header';
+import { useContext } from 'react';
+import UserContext from '../context/context';
 
 const Addproducts = () => {
+  const { user } = useContext(UserContext);
   const [items,setItems] = useState([]);
   useEffect(()=> {
     getProducts()
@@ -11,7 +14,7 @@ const Addproducts = () => {
   }, []);
 
   const addItem = (id) => {
-    addUserProducts({product_id:id}, localStorage.getItem('JWT'));
+    addUserProducts({product_id:id}, user.id);
   }
   return (
     <>

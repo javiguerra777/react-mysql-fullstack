@@ -1,27 +1,49 @@
 import React, { useState } from 'react';
+import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import UserContext from '../context/context';
 import { authenticateUser } from '../utils/api';
 const Login = () => {
   const navigate = useNavigate();
+  const { setUser } = useContext(UserContext);
+  const [failedLogin, setFailedLogin] = useState(false);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const submit=async (e)=> {
+  const submit= async (e)=> {
     e.preventDefault();
-    try{
-      const user = await authenticateUser({email: email, password:password});
-      if(user.data === 'Password not found' || user.data === 'Email not found'){
-        console.log("Incorrect login");
-      } else {
-        localStorage.setItem('JWT', user.data);
-        console.log('Good job logging in');
-        navigate('/home')
-      }
-      }catch(err){
-      console.log(err);
+    const userLogin = await authenticateUser({ email: email, password: password })
+      .then(res => {
+        if (!res.statusText === "OK") {
+          throw Error('Failed login');
+        } else {
+          return res.data;
+        }
+      })
+      .catch(err => console.log(err))
+    if (userLogin) {
+      console.log(userLogin);
+      setUser({
+        email: email,
+        id: userLogin,
+        loggedIn: true
+      })
+      navigate('/home')
+    } else {
+      setFailedLogin(true);
     }
+    setEmail('');
+    setPassword('');
   }
+  setTimeout(() => {
+    setFailedLogin(false);
+  }, 5000);
   return (
     <div className='container'>
+      {failedLogin && (
+        <div>
+          <h1>Try to login again</h1>
+        </div>
+      )}
       <header>
         <h3>Login here</h3>
       </header>
