@@ -1,4 +1,7 @@
 created this project to connect a backend using mysql to a front end using react, this is a simple fullstack application
+The backend is in a different repository so this code won't run correctly unless you either create your own backend using 
+express or whichever framework you like best or if you grab the code from the backend final repository on my github and run
+both the react app and the backend app at the same time. 
 
 # Getting Started with Create React App
 
